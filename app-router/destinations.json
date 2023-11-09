@@ -1,0 +1,10 @@
+[
+    {
+        "name": "ui5",
+        "url": "https://ui5.sap.com"
+    },
+    {
+        "name": "northwind-odata",
+        "url": "https://services.odata.org/V2/Northwind/Northwind.svc"
+    }
+]

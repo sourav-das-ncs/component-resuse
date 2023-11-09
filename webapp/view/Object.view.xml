@@ -1,0 +1,261 @@
+<mvc:View
+        xmlns:mvc="sap.ui.core.mvc"
+        controllerName="testoutcomponent.controller.Object"
+        xmlns="sap.uxap"
+        xmlns:f="sap.ui.layout.form"
+        xmlns:core="sap.ui.core"
+        xmlns:m="sap.m"
+        xmlns:vh="sap.ui.comp.valuehelpdialog"
+        xmlns:sf="sap.ui.comp.smartfield"
+        xmlns:form="sap.ui.comp.smartform"
+>
+    <ObjectPageLayout
+            id="ObjectPageLayout"
+            showAnchorBarPopover="false"
+            upperCaseAnchorBar="false"
+    >
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <heading>
+                    <m:Title text="CBR2300002"/>
+                </heading>
+
+                <!-- <snappedTitleOnMobile>
+                    <m:Title text="Navigation to sections" />
+                </snappedTitleOnMobile> -->
+
+                <actions>
+                    <m:Button
+                            text="Edit"
+                            type="Emphasized"
+                            press="onEditPress"
+                    />
+                    <m:Button
+                            type="Transparent"
+                            text="Delete"
+                    />
+                    <!-- <m:Button type="Transparent" text="Copy"/>
+					<m:OverflowToolbarButton icon="sap-icon://action" type="Transparent" text="Share" tooltip="action"/> -->
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+
+        <!-- <headerContent>
+            <m:Title
+                text="This example shows how to change the default behavior in order to be able to navigate to sections instead of subsections, using the Anchor Bar"
+                titleStyle="H6"
+            />
+        </headerContent> -->
+
+        <sections>
+            <ObjectPageSection>
+                <subSections>
+                    <ObjectPageSubSection
+                            title="Business Partner Details"
+                            titleUppercase="false"
+                    >
+                        <blocks>
+                            <f:Form
+                                    id="FormChange354wideDual"
+                                    editable="true"
+                            >
+                                <!-- <f:title>
+                                    <core:Title text="Address" />
+                                </f:title> -->
+                                <f:layout>
+                                    <f:ColumnLayout
+                                            columnsM="2"
+                                            columnsL="3"
+                                            columnsXL="4"
+                                    />
+                                </f:layout>
+                                <f:formContainers>
+                                    <f:FormContainer title="Basic Details">
+                                        <f:formElements>
+                                            <f:FormElement label="Grouping">
+                                                <f:fields>
+                                                    <!-- <m:Text text="EXCV" visible="{settingsModel>/isDisplay}"/> -->
+                                                    <m:Select
+                                                            enabled="{settingsModel>/isEditable}"
+                                                            forceSelection="false"
+                                                            selectedKey=""
+                                                    >
+                                                        <core:Item
+                                                                key=""
+                                                                text=""
+                                                        />
+                                                    </m:Select>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement
+                                                    label="Customer Business Partner"
+                                            >
+                                                <f:fields>
+                                                    <m:Input value="{CustomerDetailModel>/ContactName}" showValueHelp="true"
+                                                             valueHelpRequest=".onValueHelpRequest"/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="Company Code">
+                                                <f:fields>
+                                                    <m:Input value="1800"/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="Name1">
+                                                <f:fields>
+                                                    <m:Input
+                                                            value="Name 111232"
+                                                    />
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="Name2">
+                                                <f:fields>
+                                                    <m:Input value=""/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="Search Term">
+                                                <f:fields>
+                                                    <m:Input value="SST1000"/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement
+                                                    label="Trading Partner"
+                                            >
+                                                <f:fields>
+                                                    <m:Input value="TBD"/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                        </f:formElements>
+                                    </f:FormContainer>
+                                    <f:FormContainer title="Address">
+                                        <f:formElements>
+                                            <f:FormElement label="Street 2">
+                                                <f:fields>
+                                                    <m:Input value="Street 2"/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="Street 3">
+                                                <f:fields>
+                                                    <m:Input value=""/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="Street 4">
+                                                <f:fields>
+                                                    <m:Input value=""/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="Street 5">
+                                                <f:fields>
+                                                    <m:Input value=""/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="Postal Code">
+                                                <f:fields>
+                                                    <m:Input value="123456"/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="City">
+                                                <f:fields>
+                                                    <m:Input
+                                                            value="Singapore"
+                                                    />
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement
+                                                    label="Country/Region Key"
+                                            >
+                                                <f:fields>
+                                                    <m:Input value="SG"/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="Region">
+                                                <f:fields>
+                                                    <m:Input value="SG"/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="Language Key">
+                                                <f:fields>
+                                                    <m:Input value="EN"/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                        </f:formElements>
+                                    </f:FormContainer>
+                                    <f:FormContainer title="Communication">
+                                        <f:formElements>
+                                            <f:FormElement label="Telephone">
+                                                <f:fields>
+                                                    <m:Input value=""/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement
+                                                    label="E-Mail Address"
+                                            >
+                                                <f:fields>
+                                                    <m:Input value="1@1.com"/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="Fax">
+                                                <f:fields>
+                                                    <m:Input value=""/>
+                                                </f:fields>
+                                            </f:FormElement>
+                                        </f:formElements>
+                                    </f:FormContainer>
+                                </f:formContainers>
+                            </f:Form>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+            <ObjectPageSection>
+                <subSections>
+                    <ObjectPageSubSection
+                            title="Tax Number"
+                            titleUppercase="false"
+                    >
+                        <blocks>
+                            <form:SmartForm
+                                    id="SF1"
+                                    class="editableForm"
+                                    editTogglable="true"
+                                    editable="true"
+                                    title=""
+                            >
+                                <form:Group id="G1">
+                                    <form:GroupElement label="Company Name">
+                                        <sf:SmartField
+                                                value="{CompanyName}"
+                                                id="idPrice"
+                                        />
+                                    </form:GroupElement>
+                                </form:Group>
+                            </form:SmartForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                    <ObjectPageSubSection
+                            title="Subsection 2.2"
+                            titleUppercase="false"
+                    >
+                        <blocks>
+                            <form:SmartForm
+                                    id="SF2"
+                                    class="editableForm"
+                                    editTogglable="true"
+                                    editable="true"
+                                    title=""
+                            >
+                                <form:Group>
+                                    <form:GroupElement label="Company Name">
+                                        <sf:SmartField
+                                                value="{CompanyName}"
+                                        />
+                                    </form:GroupElement>
+                                </form:Group>
+                            </form:SmartForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
+</mvc:View>
