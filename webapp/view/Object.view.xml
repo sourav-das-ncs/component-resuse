@@ -5,7 +5,6 @@
         xmlns:f="sap.ui.layout.form"
         xmlns:core="sap.ui.core"
         xmlns:m="sap.m"
-        xmlns:vh="sap.ui.comp.valuehelpdialog"
         xmlns:sf="sap.ui.comp.smartfield"
         xmlns:form="sap.ui.comp.smartform"
 >
@@ -91,7 +90,8 @@
                                                     label="Customer Business Partner"
                                             >
                                                 <f:fields>
-                                                    <m:Input value="{CustomerDetailModel>/ContactName}" showValueHelp="true"
+                                                    <m:Input value="{CustomerDetailModel>/ContactName}"
+                                                             showValueHelp="true"
                                                              valueHelpRequest=".onValueHelpRequest"/>
                                                 </f:fields>
                                             </f:FormElement>
@@ -237,21 +237,12 @@
                             titleUppercase="false"
                     >
                         <blocks>
-                            <form:SmartForm
-                                    id="SF2"
-                                    class="editableForm"
-                                    editTogglable="true"
-                                    editable="true"
-                                    title=""
-                            >
-                                <form:Group>
-                                    <form:GroupElement label="Company Name">
-                                        <sf:SmartField
-                                                value="{CompanyName}"
-                                        />
-                                    </form:GroupElement>
-                                </form:Group>
-                            </form:SmartForm>
+                            <m:Button id="messagePopoverBtn"
+                                      visible="{=!!${message>/}.length}"
+                                      icon="sap-icon://alert"
+                                      type="Negative"
+                                      press=".onMessagePopover"
+                                      ariaHasPopup="Dialog"/>
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections>

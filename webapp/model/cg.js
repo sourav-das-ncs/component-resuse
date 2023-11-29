@@ -17,7 +17,7 @@ sap.ui.define([
         "sap/f/DynamicPageHeader",
         "sap/m/Dialog",
         "sap/ui/table/Table",
-        "sap/ui/table/Column",
+        "sap/ui/table/Column"
     ],
     /**
      * provide app-view type models (as in the first "V" in MVVC)
@@ -34,6 +34,16 @@ sap.ui.define([
               SmartFilterBar, SmartTable, CustomData,
               FlexItemData, DynamicPage, DynamicPageHeader, Dialog, Table, Column) {
         "use strict";
+
+        ValueHelpDialog.prototype.cgAddFilters = function (filters) {
+            for (let filter of filters) {
+                let path = filter.path;
+                const filterField = this.dialogMetadata.columns[path].filterField;
+                filterField.setConditions([filter]);
+                this.dialogMetadata.columns[path].filterValues.push(filter);
+                this.getFilterBar().fireSearch();
+            }
+        }
 
         return {
             createDeviceModel: function () {
@@ -160,20 +170,26 @@ sap.ui.define([
                     }));
                 }
 
+                dialog.dialogMetadata = dialogMetadata;
+
+
                 if (config.preFilters) {
-                    for (let filter of config.preFilters) {
-                        let path = filter.path;
-                        const filterField = dialogMetadata.columns[path].filterField;
-                        filterField.setConditions([filter]);
-                        dialogMetadata.columns[path].filterValues.push(filter);
-                        dialog.getFilterBar().fireSearch();
-                    }
+                    dialog.cgAddFilters(config.preFilters);
                 }
 
 
                 dialog.update();
                 // dialog.setTable(oTable);
                 return dialog;
+            },
+
+            createMessagePopOver: function (config) {
+                this._MessageManager = Core.getMessageManager();
+                this._MessageManager.registerObject(this.oView.byId("ObjectPageLayout"), true);
+
+                this.oView.setModel(this._MessageManager.getMessageModel(),"message");
+
+
             },
 
             createSmartValueHelp: async function (config) {

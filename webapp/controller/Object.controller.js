@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/routing/History",
     "../model/cg",
-    "../model/formatter"
-], function (BaseController, JSONModel, History, CG, formatter) {
+    "../model/formatter",
+    "../model/CMPO",
+], function (BaseController, JSONModel, History, CG, formatter, CMPO) {
     "use strict";
 
     return BaseController.extend("testoutcomponent.controller.Object", {
@@ -29,6 +30,21 @@ sap.ui.define([
                 isEditable: false
             })
             this.getView().setModel(settingsModel, "settingsModel");
+
+            this.cmpo = new CMPO({
+                page: this.oView.byId("ObjectPageLayout"),
+                formModel: this.getView().getModel("CustomerDetailModel")
+            });
+
+            this.cmpo.addMessage(
+                {
+                    message: "The value should not exceed 40",
+                    type: CMPO.MessageType.Warning,
+                    additionalText: "test",
+                    description: "The value of the working hours field should not exceed 40 hours.",
+                    target: "/ContactName",
+                }
+            );
         },
 
         /* =========================================================== */
@@ -177,6 +193,17 @@ sap.ui.define([
                 this.getView().addDependent(this._valueHelpDialog);
             }
             this._valueHelpDialog.open();
+        },
+
+        onMessagePopover: function (oEvent) {
+            var that = this;
+
+            this.oMP = this.cmpo.createMessageBox();
+
+            this.getView().byId("messagePopoverBtn").addDependent(this.oMP);
+
+            var oButton = oEvent.getSource();
+            this.cmpo.open(oButton);
         }
     });
 
