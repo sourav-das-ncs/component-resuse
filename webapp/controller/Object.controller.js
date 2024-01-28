@@ -163,6 +163,7 @@ sap.ui.define([
                 this._valueHelpDialog = await CG.createValueHelp({
                     title: "Customer Business Partner",
                     model: this.getView().getModel(),
+                    multiSelect: true,
                     keyField: "CustomerID",
                     keyDescField: "ContactName",
                     basePath: "/Customers",

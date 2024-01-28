@@ -123,7 +123,7 @@ sap.ui.define([
                     }), ok: function (oEvent) {
                         var token = oEvent.getParameter("tokens");
                         if (token.length > 0) {
-                            if(config.multiSelect) {
+                            if (config.multiSelect) {
                                 var selectedRows = token.map(item => item.data().row)
                                 console.log("Selected Row", selectedRows);
                                 dialog.close();
@@ -150,15 +150,6 @@ sap.ui.define([
                         dialog.close();
                     }.bind(this)
                 });
-
-                // Create a JSONModel with sample data for the dialog
-                // var oModel = new sap.ui.model.json.JSONModel({
-                //     data: [
-                //         {yourKeyField: "1", yourDescriptionField: "Value 1"},
-                //         {yourKeyField: "2", yourDescriptionField: "Value 2"},
-                //         {yourKeyField: "3", yourDescriptionField: "Value 3"}
-                //     ]
-                // });
 
                 // Create a Table to display the data
                 var oTable = await dialog.getTableAsync();
@@ -192,15 +183,5 @@ sap.ui.define([
                 // dialog.setTable(oTable);
                 return dialog;
             },
-
-            createMessagePopOver: function (config) {
-                this._MessageManager = Core.getMessageManager();
-                this._MessageManager.registerObject(this.oView.byId("ObjectPageLayout"), true);
-
-                this.oView.setModel(this._MessageManager.getMessageModel(),"message");
-
-
-            },
-
         };
     });
