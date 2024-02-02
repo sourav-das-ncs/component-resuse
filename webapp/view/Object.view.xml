@@ -90,9 +90,16 @@
                                                     label="Customer Business Partner"
                                             >
                                                 <f:fields>
-                                                    <m:Input value="{CustomerDetailModel>/ContactName}"
+                                                    <m:MultiInput ID="asDASD" tokens="{
+                                                                    path: 'filterModel>/ContactNames'
+                                                                }"
                                                              showValueHelp="true"
-                                                             valueHelpRequest=".onValueHelpRequest"/>
+                                                             showSuggestion="false"
+                                                             valueHelpRequest=".onValueHelpRequest">
+                                                        <m:tokens>
+                                                            <m:Token key="{filterModel>ContactId}" text="{filterModel>Name}" />
+                                                        </m:tokens>
+                                                    </m:MultiInput>
                                                 </f:fields>
                                             </f:FormElement>
                                             <f:FormElement label="Company Code">

@@ -45,6 +45,8 @@ sap.ui.define([
                     target: "/ContactName",
                 }
             );
+
+
         },
 
         /* =========================================================== */
@@ -85,6 +87,15 @@ sap.ui.define([
             var sReqNumbber = oEvent.getParameter("arguments").objectId;
 
             this.getDetails(sReqNumbber);
+
+            var filterModel = new JSONModel();
+            filterModel.setData({
+                ContactNames: [{
+                    ContactId: "1",
+                    Name: "ABCD"
+                }]
+            });
+            this.getView().setModel(filterModel, "filterModel");
         },
 
         getDetails: function (ReqNumber) {
@@ -101,8 +112,8 @@ sap.ui.define([
             });
             const oModel = this.getView().getModel();
             oModel.getMetaModel().loaded().then(function () {
-                that.getView().byId("SF1").bindElement(sUrl);
-                that.getView().byId("SF2").bindElement(sUrl);
+                // that.getView().byId("SF1").bindElement(sUrl);
+                // that.getView().byId("SF2").bindElement(sUrl);
             });
         },
 
@@ -158,7 +169,7 @@ sap.ui.define([
         },
 
         onValueHelpRequest: async function (oEvent) {
-            var oCPReqDetailsModel = this.getView().getModel("CustomerDetailModel");
+            var filterModel = this.getView().getModel("filterModel");
             if (!this._valueHelpDialog) {
                 this._valueHelpDialog = await CG.createValueHelp({
                     title: "Customer Business Partner",
@@ -184,8 +195,13 @@ sap.ui.define([
                             label: "Contact Name", path: "ContactName"
                         }
                     ],
-                    ok: function (selectedRow) {
-                        oCPReqDetailsModel.setProperty("/ContactName", selectedRow.ContactName);
+                    ok: function (selectedRows) {
+                        const fdata = filterModel.getData();
+                        fdata.ContactNames = selectedRows.map(item => {
+                            return {ContactId: item.CustomerID, Name: item.ContactName }
+                        })
+                        filterModel.setProperty("/ContactNames", fdata.ContactNames);
+                        filterModel.updateBindings();
                     }
                 });
                 // this._valueHelpDialog = await CG.createSmartValueHelp({
