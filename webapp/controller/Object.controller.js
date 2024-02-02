@@ -185,6 +185,13 @@ sap.ui.define([
                             values: [
                                 "ANT"
                             ]
+                        },
+                        {
+                            path: "CustomerID",
+                            operator: sap.ui.model.FilterOperator.Contains,
+                            values: [
+                                "VIN"
+                            ]
                         }
                     ],
                     columns: [

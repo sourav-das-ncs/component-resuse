@@ -35,14 +35,49 @@ sap.ui.define([
               FlexItemData, DynamicPage, DynamicPageHeader, Dialog, Table, Column) {
         "use strict";
 
+        ValueHelpDialog.prototype.cgResetFilters = function (filters) {
+
+            for (const column in this.dialogMetadata.columns) {
+                this.dialogMetadata.columns[column].filterValues = [];
+                const filterField = this.dialogMetadata.columns[column].filterField;
+                filterField.setConditions([]);
+            }
+
+            this.getFilterBar().fireSearch();
+        }
+
         ValueHelpDialog.prototype.cgAddFilters = function (filters) {
+
             for (let filter of filters) {
                 let path = filter.path;
-                const filterField = this.dialogMetadata.columns[path].filterField;
-                filterField.setConditions([filter]);
                 this.dialogMetadata.columns[path].filterValues.push(filter);
-                this.getFilterBar().fireSearch();
             }
+
+            for (const column in this.dialogMetadata.columns) {
+                const filterField = this.dialogMetadata.columns[column].filterField;
+                filterField.setConditions(this.dialogMetadata.columns[column].filterValues);
+            }
+
+            this.getFilterBar().fireSearch();
+        }
+
+        ValueHelpDialog.prototype.cgSetFilters = function (filters) {
+
+            for (const column in this.dialogMetadata.columns) {
+                this.dialogMetadata.columns[column].filterValues = [];
+            }
+
+            for (let filter of filters) {
+                let path = filter.path;
+                this.dialogMetadata.columns[path].filterValues.push(filter);
+            }
+
+            for (const column in this.dialogMetadata.columns) {
+                const filterField = this.dialogMetadata.columns[column].filterField;
+                filterField.setConditions(this.dialogMetadata.columns[column].filterValues);
+            }
+
+            this.getFilterBar().fireSearch();
         }
 
         return {
@@ -123,7 +158,7 @@ sap.ui.define([
                     }), ok: function (oEvent) {
                         var token = oEvent.getParameter("tokens");
                         if (token.length > 0) {
-                            if(config.multiSelect) {
+                            if (config.multiSelect) {
                                 var selectedRows = token.map(item => item.data().row)
                                 console.log("Selected Row", selectedRows);
                                 dialog.close();
@@ -184,7 +219,7 @@ sap.ui.define([
 
 
                 if (config.preFilters) {
-                    dialog.cgAddFilters(config.preFilters);
+                    dialog.cgSetFilters(config.preFilters);
                 }
 
 
@@ -197,7 +232,7 @@ sap.ui.define([
                 this._MessageManager = Core.getMessageManager();
                 this._MessageManager.registerObject(this.oView.byId("ObjectPageLayout"), true);
 
-                this.oView.setModel(this._MessageManager.getMessageModel(),"message");
+                this.oView.setModel(this._MessageManager.getMessageModel(), "message");
 
 
             },
