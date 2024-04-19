@@ -1,187 +1,71 @@
-sap.ui.define([
-        "sap/ui/model/json/JSONModel",
-        "sap/ui/Device",
-        "sap/ui/comp/filterbar/FilterBar",
-        "sap/ui/comp/filterbar/FilterGroupItem",
-        "sap/ui/mdc/FilterField",
-        "sap/ui/model/Filter",
-        "sap/ui/model/FilterOperator",
-        "sap/base/util/uid",
-        "sap/ui/comp/valuehelpdialog/ValueHelpDialog",
-        "sap/m/Button",
-        "sap/ui/comp/smartfilterbar/SmartFilterBar",
-        "sap/ui/comp/smarttable/SmartTable",
-        "sap/ui/core/CustomData",
-        "sap/m/FlexItemData",
-        "sap/f/DynamicPage",
-        "sap/f/DynamicPageHeader",
-        "sap/m/Dialog",
-        "sap/ui/table/Table",
-        "sap/ui/table/Column"
-    ],
-    /**
-     * provide app-view type models (as in the first "V" in MVVC)
-     *
-     * @param {typeof sap.ui.model.json.JSONModel} JSONModel
-     * @param {typeof sap.ui.Device} Device
-     *
-     * @returns {Function} createDeviceModel() for providing runtime info for the device the UI5 app is running on
-     */
-    function (JSONModel, Device,
-              FilterBar, FilterGroupItem,
-              FilterField, Filter, FilterOperator,
-              uid, ValueHelpDialog, Button,
-              SmartFilterBar, SmartTable, CustomData,
-              FlexItemData, DynamicPage, DynamicPageHeader, Dialog, Table, Column) {
-        "use strict";
+// const fetch = require("node-fetch");
 
-        ValueHelpDialog.prototype.cgAddFilters = function (filters) {
-            for (let filter of filters) {
-                let path = filter.path;
-                const filterField = this.dialogMetadata.columns[path].filterField;
-                filterField.setConditions([filter]);
-                this.dialogMetadata.columns[path].filterValues.push(filter);
-                this.getFilterBar().fireSearch();
-            }
-        }
-
-        return {
-            createDeviceModel: function () {
-                var oModel = new JSONModel(Device);
-                oModel.setDefaultBindingMode("OneWay");
-                return oModel;
-            },
-
-            createValueHelp: async function (config) {
-                const groupName = uid();
-                const filterGroupItems = [];
-                const dialogMetadata = {
-                    columnDefinition: config.columns,
-                    columns: {},
-                    filterId2ColId: {}
-                }
-                for (let colDef of config.columns) {
-                    const searchFieldId = groupName + colDef.path;
-                    dialogMetadata.columns[colDef.path] = {
-                        searchFieldId: searchFieldId,
-                        filterValues: [],
-                    };
-                    dialogMetadata.filterId2ColId[searchFieldId] = colDef.path;
-                    const oFilterField = new FilterField({
-                        id: searchFieldId,
-                        defaultOperator: sap.ui.model.FilterOperator.Contains,
-                        change: function (oEvent) {
-                            const filterID = oEvent.getSource().getId();
-                            const colId = dialogMetadata.filterId2ColId[filterID];
-                            dialogMetadata.columns[colId].filterValues = oEvent.getParameter("conditions");
-                            console.log(dialogMetadata);
-                        }
-                    });
-                    filterGroupItems.push(new FilterGroupItem({
-                        groupName: sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP,
-                        name: colDef.path,
-                        label: colDef.label,
-                        control: oFilterField
-                    }));
-                    dialogMetadata.columns[colDef.path].filterField = oFilterField;
-                }
-
-                let dialog = new ValueHelpDialog({
-                    draggable: false,
-                    title: config.title,
-                    supportMultiselect: config.multiSelect,
-                    supportRanges: false,
-                    key: config.keyField, // Specify the key field
-                    descriptionKey: config.keyDescField, // Specify the description field
-                    filterBar: new FilterBar({
-                        isRunningInValueHelpDialog: false,
-                        advancedMode: true,
-                        filterBarExpanded: true,
-                        filterGroupItems: filterGroupItems,
-                        search: function (oEvent) {
-                            var oBinding = dialog.getTable().getBinding();
-                            const filter = [];
-                            for (let columnId in dialogMetadata.columns) {
-                                let conditions = dialogMetadata.columns[columnId].filterValues;
-                                for (let cond of conditions) {
-                                    if (!cond.isEmpty) {
-                                        filter.push(new sap.ui.model.Filter(columnId,
-                                            FilterOperator[cond.operator],
-                                            cond.values));
-                                    }
-                                }
-                            }
-                            if (filter.length > 0) {
-                                oBinding.filter(new sap.ui.model.Filter({
-                                    filters: filter,
-                                    and: false
-                                }));
-                            } else {
-                                oBinding.filter()
-                            }
-                        }
-                    }), ok: function (oEvent) {
-                        var token = oEvent.getParameter("tokens");
-                        if (token.length > 0) {
-                            if (config.multiSelect) {
-                                var selectedRows = token.map(item => item.data().row)
-                                console.log("Selected Row", selectedRows);
-                                dialog.close();
-                                if (config.ok) {
-                                    config.ok(selectedRows);
-                                }
-                            } else {
-                                token = token[0];
-                                // Handle the selected value
-                                var selectedRow = token.data().row;
-                                console.log("Selected Row", selectedRow);
-                                dialog.close();
-                                if (config.ok) {
-                                    config.ok(selectedRow);
-                                }
-                            }
-                        }
-
-                        // console.log(token);
-
-                    }, cancel: function (oEvent) {
-                        // Handle the case when the user cancels the dialog
-                        // You can add any specific logic or reset values here
-                        dialog.close();
-                    }.bind(this)
-                });
-
-                // Create a Table to display the data
-                var oTable = await dialog.getTableAsync();
-
-                oTable.setModel(config.model);
-                if (oTable.bindRows) {
-                    for (let colDef of config.columns) {
-                        oTable.addColumn(new sap.ui.table.Column({label: colDef.label, template: colDef.path}));
-                    }
-                    oTable.bindRows(config.basePath);
-                } else {
-                    const cells = [];
-                    for (let colDef of config.columns) {
-                        oTable.addColumn(new sap.m.Column({header: new sap.m.Label({text: colDef.label})}));
-                        cells.push(new sap.m.Text({text: `{${colDef.path}}`}));
-                    }
-                    oTable.bindItems(config.basePath, new sap.m.ColumnListItem({
-                        cells: cells
-                    }));
-                }
-
-                dialog.dialogMetadata = dialogMetadata;
-
-
-                if (config.preFilters) {
-                    dialog.cgAddFilters(config.preFilters);
-                }
-
-
-                dialog.update();
-                // dialog.setTable(oTable);
-                return dialog;
-            },
-        };
+async function restcall(addedUsers, role, desc) {
+    await fetch("https://emea.cockpit.btp.cloud.sap/ajax/1a9a42eb-f11a-4aab-a27a-f1d3523c7db2/cf-ap10/8b000472-9622-4622-88d1-ad2954c03ad2/saveRoleCollectionCall/8b000472-9622-4622-88d1-ad2954c03ad2/saveRoleCollection", {
+        "credentials": "include",
+        "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0",
+            "Accept": "*/*",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Content-Type": "application/json",
+            "X-ClientSession-Id": "-32fc3d5140f26eb34e6d1bbe485a6b84",
+            "X-Requested-With": "XMLHttpRequest",
+            "Sec-Fetch-Dest": "empty",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Site": "same-origin",
+            "Pragma": "no-cache",
+            "Cache-Control": "no-cache"
+        },
+        "referrer": "https://emea.cockpit.btp.cloud.sap/cockpit/",
+        "body": JSON.stringify({
+            // role
+            "name": role,
+            // role description
+            "description": desc,
+            "isReadOnly": false,
+            "addedRoles": [],
+            "addedUsers": addedUsers,
+            "addedUserGroups": [],
+            "deletedUsers": [],
+            "deletedUserGroups": [],
+            "deletedRoles": [],
+            "addedAttributes": [],
+            "deletedAttributes": []
+        }),
+        "method": "PUT",
+        "mode": "cors"
     });
+    // console.log(response);
+    // const data = await response.text();
+    // return data;
+}
+
+
+async function push(name) {
+    role_obj = ROLES[name];
+    ADDED_USER = []
+    for (let u of role_obj.users) {
+        ADDED_USER.push({
+            "origin": "sap.custom",
+            "username": u,
+            "email": u
+        })
+    }
+    console.log(ADDED_USER)
+
+    await restcall(ADDED_USER, role_obj.btp_role, role_obj.desc)
+}
+
+
+async function main() {
+    for (let name in ROLES) {
+        console.log(name);
+        await push(name);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+}
+
+
+
+
+
