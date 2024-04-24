@@ -7,7 +7,7 @@ import pandas as pd
 def get_role_metadata():
     role_metadata = {}
 
-    with open('parent_derive_role_mapping.csv', 'r') as file:
+    with open('generate-excel-for-hk/parent_derive_role_mapping.csv', 'r') as file:
         csv_reader = csv.DictReader(file)
         for row in csv_reader:
             role = row['ROLE']
@@ -18,7 +18,7 @@ def get_role_metadata():
             role_metadata[role]["parent_role"] = parent_role
             role_metadata[role]["desc"] = desc
 
-    with open('role_desc.csv', 'r') as file:
+    with open('generate-excel-for-hk/role_desc.csv', 'r') as file:
         csv_reader = csv.DictReader(file)
         for row in csv_reader:
             role = row['ROLE']
