@@ -54,11 +54,11 @@ def main():
         csv_reader = csv.DictReader(file)
         # data = [row for row in csv_reader]
         for row in csv_reader:
-            role = row['Role']
-            auth_obj = row['Object']
-            fld_name = row['Field name']
-            frm_val = row['From']
-            to_val = row['To']
+            role = row['AGR_NAME']
+            auth_obj = row['OBJECT']
+            fld_name = row['FIELD']
+            frm_val = row['LOW']
+            to_val = row['HIGH']
             #
             if role not in nosql_struct:
                 nosql_struct[role] = {
@@ -104,15 +104,15 @@ def main():
     with open('all_users.csv', 'r') as file:
         csv_reader = csv.DictReader(file)
         for row in csv_reader:
-            username = row['ï»¿User Name']
-            role = row['Role']
-            desc = row['DESC']
+            username = row['UNAME']
+            role = row['AGR_NAME']
             if role not in nosql_struct:
                 continue
             nosql_struct[role]["USERS"].add(username)
             if "NO USER" in nosql_struct[role]["USERS"]:
                 nosql_struct[role]["USERS"].remove("NO USER")
-            nosql_struct[role]["DESC"] = desc
+            if "DESC" in row:
+                nosql_struct[role]["DESC"] = row['DESC']
 
     with open('parent_derive_role_mapping.csv', 'r') as file:
         csv_reader = csv.DictReader(file)
@@ -148,7 +148,7 @@ def main():
         return new_row
 
     for role_name in nosql_struct:
-        for username in nosql_struct[role_name]["USERS"]:
+        for username in sorted(nosql_struct[role_name]["USERS"]):
             role = nosql_struct[role_name]
             print("Working for ", role_name)
             for tcode in role["TCODE"]:
@@ -210,7 +210,9 @@ def main():
 
     df = pd.DataFrame(output, columns=fields)
 
-    df.to_excel("output.xlsx", index=False)
+    print("data frame created", df.head())
+
+    df.to_excel("output-q22-901.xlsx", index=False)
 
     # with open('../output.csv', 'w', encoding='UTF8', newline='') as f:
     #     writer = csv.DictWriter(f, fieldnames=fields)
