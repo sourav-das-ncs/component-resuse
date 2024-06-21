@@ -152,7 +152,7 @@ def main():
         "DIST_CHNL": "DIST_CHNL",
         "DIV": "DIV",
         # "STORAGE_LOC": "STORAGE_LOC",
-        "PUR_ORG": "PURCHASE_GROUP",
+        "PUR_ORG": "PURCHASE_ORGANIZATION",
         "CC": "COMPANY_CODE",
         "PRG": "PURCHASE_GROUP",
         "PC": "PROFIT_CENTER",
@@ -227,9 +227,9 @@ def main():
 
     print("data frame created", df.head())
 
-    # df.to_excel("output.xlsx", index=False)
+    df.to_excel("output.xlsx", index=False)
 
-    df.to_csv("output.csv", index=False)
+    # df.to_csv("output.csv", index=False)
 
     # with open('../output.csv', 'w', encoding='UTF8', newline='') as f:
     #     writer = csv.DictWriter(f, fieldnames=fields)

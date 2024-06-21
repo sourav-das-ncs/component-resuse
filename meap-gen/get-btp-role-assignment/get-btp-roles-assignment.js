@@ -6,7 +6,7 @@ async function getBtpRoleAssignment(role) {
             "Accept": "*/*",
             "Accept-Language": "en-US,en;q=0.5",
             "Content-Type": "application/json; charset=UTF-8",
-            "X-ClientSession-Id": "64852c5d8fdd22a56a34f05fa6c2d1be",
+            "X-ClientSession-Id": "5681395c24dbd2cae0c9b80a482a2894",
             "X-Requested-With": "XMLHttpRequest",
             "Sec-Fetch-Dest": "empty",
             "Sec-Fetch-Mode": "cors",
@@ -36,7 +36,7 @@ async function getRoles() {
             "Accept": "*/*",
             "Accept-Language": "en-US,en;q=0.5",
             "Content-Type": "application/json",
-            "X-ClientSession-Id": "64852c5d8fdd22a56a34f05fa6c2d1be",
+            "X-ClientSession-Id": "5681395c24dbd2cae0c9b80a482a2894",
             "X-Requested-With": "XMLHttpRequest",
             "Sec-Fetch-Dest": "empty",
             "Sec-Fetch-Mode": "cors",
@@ -57,7 +57,7 @@ async function main() {
     const roles = await getRoles();
     btp_roles = [];
     for (const role of roles) {
-        if (role.name.startsWith("~q22_901")) {
+        if (role.name.startsWith("~q22_901") || role.name.startsWith("ZSG")) {
             role.users = await getBtpRoleAssignment(role.name)
             btp_roles.push(role)
         }
