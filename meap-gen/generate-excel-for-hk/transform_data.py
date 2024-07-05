@@ -227,7 +227,7 @@ def main():
 
     print("data frame created", df.head())
 
-    df.to_excel("output.xlsx", index=False)
+    df.to_excel("AUTH_COMP.xlsx", index=False)
 
     # df.to_csv("output.csv", index=False)
 

@@ -1,5 +1,5 @@
 let SESSIONID;
-SESSIONID = '789bf048595d2b15c25700a8168ec8ec';
+SESSIONID = '-37a695ec5727af767c58fb4d3e11a920';
 
 /*
 {
@@ -151,12 +151,12 @@ async function cloneInSIT(ORIGINAL_USER, CLONED_USER) {
     await updateRoleSIT(CLONED_USER, oClonedDetails);
 }
 
-ORIGINAL_USER = "Winghong.Chui@asia.meap.com"
-CLONED_USER = "WHCHUI_SV@asia.meap.com"
-
 async function main() {
     await cloneInUAT(ORIGINAL_USER, CLONED_USER);
     // await cloneInSIT(ORIGINAL_USER, CLONED_USER);
 }
+
+ORIGINAL_USER = "maikee.gan@asia.meap.com"
+CLONED_USER = "MKGAN_C@asia.meap.com"
 
 main()
