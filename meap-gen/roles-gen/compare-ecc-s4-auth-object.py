@@ -8,7 +8,7 @@ import pandas as pd
 def isRolePresent(conn, ROLE_NAME):
     with closing(conn.cursor()) as cursor:
         sql = """
-                SELECT COUNT(*) FROM "901_AGR_1251_DUMP"
+                SELECT COUNT(*) FROM DEV_AGR_1251_DUMP
                 WHERE AGR_NAME = ?
                 """
         # print(sql)
@@ -19,7 +19,7 @@ def isRolePresent(conn, ROLE_NAME):
 def isObjectPresent(conn, ROLE_NAME, OBJECT):
     with closing(conn.cursor()) as cursor:
         sql = """
-                SELECT COUNT(*) FROM "901_AGR_1251_DUMP"
+                SELECT COUNT(*) FROM DEV_AGR_1251_DUMP
                 WHERE AGR_NAME = ? AND OBJECT = ?
                 """
         # print(sql)
@@ -30,7 +30,7 @@ def isObjectPresent(conn, ROLE_NAME, OBJECT):
 def isFieldPresent(conn, ROLE_NAME, OBJECT, FIELD):
     with closing(conn.cursor()) as cursor:
         sql = """
-                SELECT COUNT(*) FROM "901_AGR_1251_DUMP"
+                SELECT COUNT(*) FROM DEV_AGR_1251_DUMP
                 WHERE AGR_NAME = ? AND OBJECT = ? AND FIELD = ?
                 """
         # print(sql)
@@ -41,7 +41,7 @@ def isFieldPresent(conn, ROLE_NAME, OBJECT, FIELD):
 def isLOWPresent(conn, ROLE_NAME, OBJECT, FIELD, LOW):
     with closing(conn.cursor()) as cursor:
         sql = """
-                SELECT COUNT(*) FROM "901_AGR_1251_DUMP"
+                SELECT COUNT(*) FROM DEV_AGR_1251_DUMP
                 WHERE AGR_NAME = ? AND OBJECT = ? AND FIELD = ? AND LOW is ?
                 """
         # print(sql)
@@ -52,7 +52,7 @@ def isLOWPresent(conn, ROLE_NAME, OBJECT, FIELD, LOW):
 def isHIGHPresent(conn, ROLE_NAME, OBJECT, FIELD, LOW, HIGH):
     with closing(conn.cursor()) as cursor:
         sql = """
-                SELECT COUNT(*) FROM "901_AGR_1251_DUMP"
+                SELECT COUNT(*) FROM DEV_AGR_1251_DUMP
                 WHERE AGR_NAME = ? AND OBJECT = ? AND FIELD = ? AND LOW is ? AND HIGH is ?
                 """
         # print(sql)
@@ -60,14 +60,64 @@ def isHIGHPresent(conn, ROLE_NAME, OBJECT, FIELD, LOW, HIGH):
         return result[0] > 0
 
 
-def checkIfValuePresentInS4(conn, ecc_row, output: list):
+def getRemarks(conn, ROLE_NAME, OBJECT, FIELD, LOW, HIGH):
     with closing(conn.cursor()) as cursor:
+        sql = """
+                SELECT DISTINCT Remarks FROM AUTH_COMP_FINAL_REMARKS
+                WHERE ECC_ROLE = ? AND OBJECT = ? AND FIELD = ? AND LOW is ? AND HIGH is ?
+            """
+        # print(sql)
+        result = cursor.execute(sql, [ROLE_NAME, OBJECT, FIELD, LOW, HIGH]).fetchall()
+        remarks = set(map(lambda r: r['Remarks'], result))
+        return ",".join(remarks)
+        pass
+
+
+def getTranslatedValues(conn, ROLE_NAME, OBJECT, FIELD, LOW, HIGH):
+    with closing(conn.cursor()) as cursor:
+        sql = """
+                        SELECT TRANSLATED_LOW, TRANSLATED_HIGH FROM AUTH_COMP_FINAL_REMARKS
+                        WHERE ECC_ROLE = ? AND OBJECT = ? AND FIELD = ? AND LOW is ? AND HIGH is ? AND REL = 'PARENT'
+                    """
+        # print(sql)
+        result = cursor.execute(sql, [ROLE_NAME, OBJECT, FIELD, LOW, HIGH]).fetchall()
+        if len(result) > 0:
+            return result[0]['TRANSLATED_LOW'], result[0]['TRANSLATED_HIGH']
+        else:
+            return "", ""
+
+
+IGNORE_ROLES = {'Z_COPY_SAPALL', 'Z_IN_MM_LO.MB1C',
+                'Z_ROLE.ASSIGNMENT.ADM_ISS',
+                'Z_IN_SD_TCS.ADM_TMP',
+                'Z_ROLE_DATAEXTRACTION',
+                'Z_ROLE_MM_TCODES',
+                'Z_TEMPROLE-STMS',
+                'Z_TEMPROLE-STVARV',
+                'Z_TEMP_AUTH',
+                'Z_TEMP_SU01'}
+
+
+def checkIfValuePresentInS4(conn, ecc_row, output: list):
+    if ecc_row['AGR_NAME'] in IGNORE_ROLES:
+        return
+    with closing(conn.cursor()) as cursor:
+        tl, th = getTranslatedValues(conn,
+                                     ecc_row['AGR_NAME'],
+                                     ecc_row['OBJECT'],
+                                     ecc_row['FIELD'],
+                                     ecc_row['LOW'],
+                                     ecc_row['HIGH'])
+
         obj = {
             "ECC_ROLE": ecc_row['AGR_NAME'],
+            'S4_DERIVED_ROLE': ecc_row['S4_DERIVED_ROLE'],
             'OBJECT': ecc_row['OBJECT'],
             'FIELD': ecc_row['FIELD'],
             'LOW': ecc_row['LOW'],
             'HIGH': ecc_row['HIGH'],
+            'TRANSLATED_LOW': tl,
+            'TRANSLATED_HIGH': th,
             'IS_PRESENT': 'NO',
             'REL': 'PARENT',
             'S4_LOW': ecc_row['LOW'] if isLOWPresent(conn,
@@ -89,32 +139,40 @@ def checkIfValuePresentInS4(conn, ecc_row, output: list):
             'S4_MATCHED_FIELD': ecc_row['FIELD'] if isFieldPresent(conn,
                                                                    ecc_row['S4_DERIVED_ROLE'],
                                                                    ecc_row['OBJECT'],
-                                                                   ecc_row['FIELD']) else '#NA'
+                                                                   ecc_row['FIELD']) else '#NA',
+            'REMARKS': getRemarks(conn,
+                                  ecc_row['AGR_NAME'],
+                                  ecc_row['OBJECT'],
+                                  ecc_row['FIELD'],
+                                  ecc_row['LOW'],
+                                  ecc_row['HIGH'])
         }
+
         output.append(obj)
 
         if obj['S4_HIGH'] == '#NA':
-            sql = """
-                    SELECT * FROM "901_AGR_1251_DUMP"
-                    WHERE AGR_NAME = ? AND OBJECT = ? AND FIELD = ?
-                    """
-            # print(sql)
-            result = cursor.execute(sql, [ecc_row['S4_DERIVED_ROLE'], ecc_row['OBJECT'], ecc_row['FIELD']]).fetchall()
-            for row in result:
-                output.append({
-                    "ECC_ROLE": ecc_row['AGR_NAME'],
-                    'OBJECT': ecc_row['OBJECT'],
-                    'FIELD': ecc_row['FIELD'],
-                    'LOW': ecc_row['LOW'],
-                    'HIGH': ecc_row['HIGH'],
-                    'IS_PRESENT': 'NO',
-                    'REL': 'CHILD',
-                    'S4_LOW': row['LOW'],
-                    'S4_HIGH': row['HIGH'],
-                    'S4_MATCHED_ROLE': row['AGR_NAME'],
-                    'S4_MATCHED_OBJECT': row['OBJECT'],
-                    'S4_MATCHED_FIELD': row['FIELD']
-                })
+            # sql = """
+            #         SELECT * FROM DEV_AGR_1251_DUMP
+            #         WHERE AGR_NAME = ? AND OBJECT = ? AND FIELD = ?
+            #         """
+            # # print(sql)
+            # result = cursor.execute(sql, [ecc_row['S4_DERIVED_ROLE'], ecc_row['OBJECT'], ecc_row['FIELD']]).fetchall()
+            # for row in result:
+            #     output.append({
+            #         "ECC_ROLE": ecc_row['AGR_NAME'],
+            #         'OBJECT': ecc_row['OBJECT'],
+            #         'FIELD': ecc_row['FIELD'],
+            #         'LOW': ecc_row['LOW'],
+            #         'HIGH': ecc_row['HIGH'],
+            #         'IS_PRESENT': 'NO',
+            #         'REL': 'CHILD',
+            #         'S4_LOW': row['LOW'],
+            #         'S4_HIGH': row['HIGH'],
+            #         'S4_MATCHED_ROLE': row['AGR_NAME'],
+            #         'S4_MATCHED_OBJECT': row['OBJECT'],
+            #         'S4_MATCHED_FIELD': row['FIELD']
+            #     })
+            pass
         else:
             obj['IS_PRESENT'] = 'YES'
         print(obj)

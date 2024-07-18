@@ -1,5 +1,5 @@
 let SESSIONID;
-SESSIONID = '-37a695ec5727af767c58fb4d3e11a920';
+SESSIONID = '-4d77a9bf382ae20bd751cd2892bf8919';
 
 /*
 {
@@ -128,6 +128,54 @@ async function updateRoleSIT(userId, userDetails) {
 }
 
 
+async function getRolesDev(userEmail) {
+    const response = await fetch(`https://emea.cockpit.btp.cloud.sap/ajax/1a9a42eb-f11a-4aab-a27a-f1d3523c7db2/cf-ap10/76d6522a-bedf-4d38-8260-5bf56628e849/getUserRoleCollectionAssignments/76d6522a-bedf-4d38-8260-5bf56628e849/httpsa5e2bjyuh.accounts.ondemand.com?userid=${userEmail}`, {
+        "credentials": "include",
+        "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0",
+            "Accept": "*/*",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Content-Type": "application/json",
+            "X-ClientSession-Id": SESSIONID,
+            "X-Requested-With": "XMLHttpRequest",
+            "Sec-Fetch-Dest": "empty",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Site": "same-origin",
+            "Pragma": "no-cache",
+            "Cache-Control": "no-cache"
+        },
+        "referrer": "https://emea.cockpit.btp.cloud.sap/cockpit/",
+        "method": "GET",
+        "mode": "cors"
+    });
+    const userDetails = await response.json();
+    return userDetails;
+}
+
+async function updateRoleDEV(userId, userDetails) {
+    await fetch(`https://emea.cockpit.btp.cloud.sap/ajax/1a9a42eb-f11a-4aab-a27a-f1d3523c7db2/cf-ap10/76d6522a-bedf-4d38-8260-5bf56628e849/updateUserRoleCollection/76d6522a-bedf-4d38-8260-5bf56628e849?userid=${userId}`, {
+        "credentials": "include",
+        "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0",
+            "Accept": "*/*",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Content-Type": "application/json",
+            "X-ClientSession-Id": SESSIONID,
+            "X-Requested-With": "XMLHttpRequest",
+            "Sec-Fetch-Dest": "empty",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Site": "same-origin",
+            "Priority": "u=0",
+            "Pragma": "no-cache",
+            "Cache-Control": "no-cache"
+        },
+        "referrer": "https://emea.cockpit.btp.cloud.sap/cockpit/",
+        "body": JSON.stringify(userDetails),
+        "method": "PUT",
+        "mode": "cors"
+    });
+}
+
 
 async function cloneInUAT(ORIGINAL_USER, CLONED_USER) {
     const oUserDetails = await getRoles(ORIGINAL_USER);
@@ -151,12 +199,43 @@ async function cloneInSIT(ORIGINAL_USER, CLONED_USER) {
     await updateRoleSIT(CLONED_USER, oClonedDetails);
 }
 
-async function main() {
-    await cloneInUAT(ORIGINAL_USER, CLONED_USER);
-    // await cloneInSIT(ORIGINAL_USER, CLONED_USER);
+async function cloneUAT_TO_DEV(ORIGINAL_USER, CLONED_USER) {
+    const oUserDetails = await getRoles(ORIGINAL_USER);
+    const oClonedDetails = await getRolesDev(CLONED_USER);
+
+    for (let role of oUserDetails.roleCollections) {
+        if (role.startsWith("~q22_901_")) {
+            role = role.replaceAll("~q22_901_", "~sap_s4hana_")
+            oClonedDetails.roleCollections.push(role);
+        }
+    }
+
+    await updateRoleDEV(CLONED_USER, oClonedDetails);
 }
 
-ORIGINAL_USER = "maikee.gan@asia.meap.com"
-CLONED_USER = "MKGAN_C@asia.meap.com"
+async function cloneUAT_TO_SIT(ORIGINAL_USER, CLONED_USER) {
+    const oUserDetails = await getRoles(ORIGINAL_USER);
+    const oClonedDetails = await getRolesSIT(CLONED_USER);
+
+    for (let role of oUserDetails.roleCollections) {
+        if (role.startsWith("~q22_901_")) {
+            role = role.replaceAll("~q22_901_", "~q2800_s4hanadt_")
+            oClonedDetails.roleCollections.push(role);
+        }
+    }
+
+    await updateRoleSIT(CLONED_USER, oClonedDetails);
+}
+
+
+async function main() {
+    // await cloneInUAT(ORIGINAL_USER, CLONED_USER);
+    // await cloneInSIT(ORIGINAL_USER, CLONED_USER);
+    // await cloneUAT_TO_DEV(ORIGINAL_USER, CLONED_USER);
+    await cloneUAT_TO_SIT(ORIGINAL_USER, CLONED_USER);
+}
+
+ORIGINAL_USER = "YVONNECHIA_C@asia.meap.com"
+CLONED_USER = "YVONNECHIA_C@asia.meap.com"
 
 main()
