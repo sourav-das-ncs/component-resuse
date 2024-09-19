@@ -1,5 +1,5 @@
 let SESSIONID;
-SESSIONID = '-4d77a9bf382ae20bd751cd2892bf8919';
+SESSIONID = '-83e3c95cdaa358c836ee469e8fa6f52';
 
 /*
 {
@@ -235,7 +235,7 @@ async function main() {
     await cloneUAT_TO_SIT(ORIGINAL_USER, CLONED_USER);
 }
 
-ORIGINAL_USER = "YVONNECHIA_C@asia.meap.com"
-CLONED_USER = "YVONNECHIA_C@asia.meap.com"
+ORIGINAL_USER = "Angel.Ooi@asia.meap.com"
+CLONED_USER = "ANGELOOI_C@asia.meap.com"
 
 main()

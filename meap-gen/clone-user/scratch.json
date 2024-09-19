@@ -1,0 +1,457 @@
+{
+    "resources": [
+        {
+            "emails": [
+                {
+                    "value": "bosen.huang@asia.meap.com",
+                    "primary": false
+                }
+            ],
+            "lastLogonTime": 1721196491130,
+            "meta": {
+                "version": 1,
+                "created": "2024-04-18T10:43:59.283Z",
+                "lastModified": "2024-04-23T10:34:47.785Z"
+            },
+            "origin": "sap.custom",
+            "name": {
+                "familyName": "HUANG",
+                "givenName": "BOSEN"
+            },
+            "active": true,
+            "groups": [
+                {
+                    "value": "~q22_901_ZSG_CS_NO.DSP_XXX",
+                    "display": "~q22_901_ZSG_CS_NO.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_COND.DSP_XXX",
+                    "display": "~q22_901_ZSG_SD_COND.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AR.PYMT",
+                    "display": "~q22_901_ZSG_FI_AR.PYMT",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AR.PRO",
+                    "display": "~q22_901_ZSG_FI_AR.PRO",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "ProcessAutomationAdmin",
+                    "display": "ProcessAutomationAdmin",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AP.PRO",
+                    "display": "~q22_901_ZSG_FI_AP.PRO",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_GL.PRO",
+                    "display": "~q22_901_ZSG_FI_GL.PRO",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_CMIR.DSP_XXX",
+                    "display": "~q22_901_ZSG_SD_CMIR.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_GL.SDSP_XXX",
+                    "display": "~q22_901_ZSG_FI_GL.SDSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_PI.PRO_XXX",
+                    "display": "~q22_901_ZSG_MM_PI.PRO_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_PS_PRJ.DSP_XXX",
+                    "display": "~q22_901_ZSG_PS_PRJ.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_BL.PRO_XXX",
+                    "display": "~q22_901_ZSG_SD_BL.PRO_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AR.DISP",
+                    "display": "~q22_901_ZSG_FI_AR.DISP",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "Process_Approver",
+                    "display": "Process_Approver",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_CS_NO.ADM",
+                    "display": "~q22_901_ZSG_CS_NO.ADM",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_PO.PRT_XXX",
+                    "display": "~q22_901_ZSG_MM_PO.PRT_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AP.LOGI",
+                    "display": "~q22_901_ZSG_FI_AP.LOGI",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_SO.PRO_XXX",
+                    "display": "~q22_901_ZSG_SD_SO.PRO_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FSCM_CR.CRDBLK_APPR",
+                    "display": "~q22_901_ZSG_FSCM_CR.CRDBLK_APPR",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_DO.DSP_XXX",
+                    "display": "~q22_901_ZSG_SD_DO.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_GL.DISP",
+                    "display": "~q22_901_ZSG_FI_GL.DISP",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_BS_OU.PRO",
+                    "display": "~q22_901_ZSG_BS_OU.PRO",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_CK.LOT.PRO",
+                    "display": "~q22_901_ZSG_FI_CK.LOT.PRO",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_BS_UT.DSP_XXX",
+                    "display": "~q22_901_ZSG_BS_UT.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AP.DISP",
+                    "display": "~q22_901_ZSG_FI_AP.DISP",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "ProcessAutomationParticipant",
+                    "display": "ProcessAutomationParticipant",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_MAT.DSP_XXX",
+                    "display": "~q22_901_ZSG_MM_MAT.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_BL.REQCNC_XXX",
+                    "display": "~q22_901_ZSG_SD_BL.REQCNC_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_PO.DSP_XXX",
+                    "display": "~q22_901_ZSG_MM_PO.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_GL.CHG",
+                    "display": "~q22_901_ZSG_FI_GL.CHG",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_BL.DSP_XXX",
+                    "display": "~q22_901_ZSG_SD_BL.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_QT.PRO_XXX",
+                    "display": "~q22_901_ZSG_SD_QT.PRO_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_LO.PRO-TRS_XXX",
+                    "display": "~q22_901_ZSG_MM_LO.PRO-TRS_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_IM.DSP_XXX",
+                    "display": "~q22_901_ZSG_MM_IM.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_PS_PRJ.MEC.PROC_XXX",
+                    "display": "~q22_901_ZSG_PS_PRJ.MEC.PROC_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_PR.DSP_XXX",
+                    "display": "~q22_901_ZSG_MM_PR.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_CO_PA.SDSP_XXX",
+                    "display": "~q22_901_ZSG_CO_PA.SDSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_IM.STKOFF_XXX",
+                    "display": "~q22_901_ZSG_MM_IM.STKOFF_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_MM.PRICE_XXX",
+                    "display": "~q22_901_ZSG_MM_MM.PRICE_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_LO.PRO-GI.CANCEL_XXX",
+                    "display": "~q22_901_ZSG_MM_LO.PRO-GI.CANCEL_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_SO.DSP_XXX",
+                    "display": "~q22_901_ZSG_SD_SO.DSP_XXX",
+                    "type": "DIRECT"
+                }
+            ],
+            "id": "42c4ae93-c1f9-455e-b16a-4d17783d486c",
+            "userName": "bosen.huang@asia.meap.com"
+        },
+        {
+            "emails": [
+                {
+                    "value": "BOSENHUANG_C@asia.meap.com",
+                    "primary": false
+                }
+            ],
+            "lastLogonTime": 1721119884556,
+            "meta": {
+                "version": 32,
+                "created": "2024-05-17T10:51:41.462Z",
+                "lastModified": "2024-07-16T08:51:09.262Z"
+            },
+            "origin": "sap.custom",
+            "name": {
+                "familyName": "BOSENHUANG_C"
+            },
+            "active": true,
+            "groups": [
+                {
+                    "value": "~q22_901_ZSG_CS_NO.DSP_XXX",
+                    "display": "~q22_901_ZSG_CS_NO.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_COND.DSP_XXX",
+                    "display": "~q22_901_ZSG_SD_COND.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AR.PYMT",
+                    "display": "~q22_901_ZSG_FI_AR.PYMT",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AR.PRO",
+                    "display": "~q22_901_ZSG_FI_AR.PRO",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "ProcessAutomationAdmin",
+                    "display": "ProcessAutomationAdmin",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AP.PRO",
+                    "display": "~q22_901_ZSG_FI_AP.PRO",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_GL.PRO",
+                    "display": "~q22_901_ZSG_FI_GL.PRO",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_CMIR.DSP_XXX",
+                    "display": "~q22_901_ZSG_SD_CMIR.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_GL.SDSP_XXX",
+                    "display": "~q22_901_ZSG_FI_GL.SDSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_PI.PRO_XXX",
+                    "display": "~q22_901_ZSG_MM_PI.PRO_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_BL.PRO_XXX",
+                    "display": "~q22_901_ZSG_SD_BL.PRO_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AR.DISP",
+                    "display": "~q22_901_ZSG_FI_AR.DISP",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "Process_Approver",
+                    "display": "Process_Approver",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_CS_NO.ADM",
+                    "display": "~q22_901_ZSG_CS_NO.ADM",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_PO.PRT_XXX",
+                    "display": "~q22_901_ZSG_MM_PO.PRT_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AP.LOGI",
+                    "display": "~q22_901_ZSG_FI_AP.LOGI",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_SO.PRO_XXX",
+                    "display": "~q22_901_ZSG_SD_SO.PRO_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FSCM_CR.CRDBLK_APPR",
+                    "display": "~q22_901_ZSG_FSCM_CR.CRDBLK_APPR",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_DO.DSP_XXX",
+                    "display": "~q22_901_ZSG_SD_DO.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_GL.DISP",
+                    "display": "~q22_901_ZSG_FI_GL.DISP",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_BS_OU.PRO",
+                    "display": "~q22_901_ZSG_BS_OU.PRO",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_CK.LOT.PRO",
+                    "display": "~q22_901_ZSG_FI_CK.LOT.PRO",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_BS_UT.DSP_XXX",
+                    "display": "~q22_901_ZSG_BS_UT.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_AP.DISP",
+                    "display": "~q22_901_ZSG_FI_AP.DISP",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "ProcessAutomationParticipant",
+                    "display": "ProcessAutomationParticipant",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_MAT.DSP_XXX",
+                    "display": "~q22_901_ZSG_MM_MAT.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_BL.REQCNC_XXX",
+                    "display": "~q22_901_ZSG_SD_BL.REQCNC_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_PO.DSP_XXX",
+                    "display": "~q22_901_ZSG_MM_PO.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_FI_GL.CHG",
+                    "display": "~q22_901_ZSG_FI_GL.CHG",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_BL.DSP_XXX",
+                    "display": "~q22_901_ZSG_SD_BL.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_QT.PRO_XXX",
+                    "display": "~q22_901_ZSG_SD_QT.PRO_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_LO.PRO-TRS_XXX",
+                    "display": "~q22_901_ZSG_MM_LO.PRO-TRS_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_IM.DSP_XXX",
+                    "display": "~q22_901_ZSG_MM_IM.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_PR.DSP_XXX",
+                    "display": "~q22_901_ZSG_MM_PR.DSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_CO_PA.SDSP_XXX",
+                    "display": "~q22_901_ZSG_CO_PA.SDSP_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_IM.STKOFF_XXX",
+                    "display": "~q22_901_ZSG_MM_IM.STKOFF_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_MM.PRICE_XXX",
+                    "display": "~q22_901_ZSG_MM_MM.PRICE_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_MM_LO.PRO-GI.CANCEL_XXX",
+                    "display": "~q22_901_ZSG_MM_LO.PRO-GI.CANCEL_XXX",
+                    "type": "DIRECT"
+                },
+                {
+                    "value": "~q22_901_ZSG_SD_SO.DSP_XXX",
+                    "display": "~q22_901_ZSG_SD_SO.DSP_XXX",
+                    "type": "DIRECT"
+                }
+            ],
+            "id": "c88c7df9-e61e-4848-9154-191cd1d502b6",
+            "userName": "BOSENHUANG_C@asia.meap.com"
+        }
+    ],
+    "startIndex": 1,
+    "itemsPerPage": 40,
+    "totalResults": 2,
+    "schemas": [
+        "urn:scim:schemas:core:1.0"
+    ]
+}

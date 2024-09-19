@@ -87,6 +87,17 @@ def getTranslatedValues(conn, ROLE_NAME, OBJECT, FIELD, LOW, HIGH):
             return "", ""
 
 
+def isReq(conn, ROLE_NAME):
+    with closing(conn.cursor()) as cursor:
+        sql = """
+                SELECT COUNT(*) FROM AUTH_COMP_FINAL_REMARKS
+                WHERE ECC_ROLE = ? AND IS_REQ = 'X'
+                """
+        # print(sql)
+        result = cursor.execute(sql, [ROLE_NAME]).fetchone()
+        return result[0] > 0
+
+
 IGNORE_ROLES = {'Z_COPY_SAPALL', 'Z_IN_MM_LO.MB1C',
                 'Z_ROLE.ASSIGNMENT.ADM_ISS',
                 'Z_IN_SD_TCS.ADM_TMP',
@@ -100,6 +111,8 @@ IGNORE_ROLES = {'Z_COPY_SAPALL', 'Z_IN_MM_LO.MB1C',
 
 def checkIfValuePresentInS4(conn, ecc_row, output: list):
     if ecc_row['AGR_NAME'] in IGNORE_ROLES:
+        return
+    if not isReq(conn, ecc_row['AGR_NAME']):
         return
     with closing(conn.cursor()) as cursor:
         tl, th = getTranslatedValues(conn,
@@ -192,9 +205,11 @@ def main():
             SELECT AGR_NAME, S4_DERIVED_ROLE, OBJECT, FIELD, LOW, HIGH
             FROM ECC_AGR_1251_DUMP
             JOIN PC_MAPPED_ECC_ROLES ON AGR_NAME = ECC_ROLE
-            WHERE ( AGR_NAME LIKE 'ZAL%' OR AGR_NAME LIKE 'ZSG%' OR AGR_NAME LIKE 'Z\\_%' ESCAPE '\\')
+            WHERE ( AGR_NAME LIKE 'ZSG%' )
             ORDER BY S4_DERIVED_ROLE, OBJECT, FIELD
             """).fetchall()
+
+            # WHERE ( AGR_NAME LIKE 'ZAL%' OR AGR_NAME LIKE 'ZSG%' OR AGR_NAME LIKE 'Z\\_%' ESCAPE '\\')
 
             for row in results:
                 checkIfValuePresentInS4(conn, row, output)

@@ -1,6 +1,7 @@
 import csv
 import json
 
+import numpy as np
 import pandas as pd
 
 
@@ -50,8 +51,10 @@ def main():
 
     nosql_struct = {}
 
+    df = pd.read_csv("filtered_roles.csv").replace(np.nan, None)
+
     with open('filtered_roles.csv', 'r') as file:
-        csv_reader = csv.DictReader(file)
+        csv_reader = df.to_dict(orient='records')
         # data = [row for row in csv_reader]
         for row in csv_reader:
             role = row['AGR_NAME']
@@ -113,8 +116,9 @@ def main():
                     "TO_DESC": value_desc[to_val] if to_val in value_desc else ""
                 }
 
+    df = pd.read_csv("all_users.csv").replace(np.nan, None)
     with open('all_users.csv', 'r') as file:
-        csv_reader = csv.DictReader(file)
+        csv_reader = df.to_dict(orient='records')
         for row in csv_reader:
             username = row['UNAME']
             role = row['AGR_NAME']
